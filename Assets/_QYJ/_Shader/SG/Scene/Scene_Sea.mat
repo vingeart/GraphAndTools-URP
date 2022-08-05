@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Scene_Sea
+  m_Shader: {fileID: -6465566751694194690, guid: c27689ea4b0dd7d4ebe19b158acdec19,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_15D639A4:
+        m_Texture: {fileID: 2800000, guid: dfa3b3fa70b88a9479ff303aea1f1f66, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_29ebb96fadcd40df8e1ac6c58d672ed3:
+        m_Texture: {fileID: 2800000, guid: d01457b88b1c5174ea4235d140b5fab8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_7EA2532C:
+        m_Texture: {fileID: 2800000, guid: 0ae6c3e7b170eb440bc642fe13b8cd0f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: dfa3b3fa70b88a9479ff303aea1f1f66, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoarmTex:
+        m_Texture: {fileID: 2800000, guid: 6f6027c9f736fb9458ec6a52f3a9adec, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondBumpMap:
+        m_Texture: {fileID: 2800000, guid: 0ae6c3e7b170eb440bc642fe13b8cd0f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_2ff523349c0a442184dfef852d50e96f: 0.099
+    - Vector1_37d27f44bdb2477284bb6d38ed8a524c: 40
+    - Vector1_4a6d4a766f2243ad8c753771a8415fc3: 2.08
+    - Vector1_5B661245: 0.7
+    - Vector1_7b3ace3ad9de4d80a8d756ac6bdebaaf: 0.48
+    - Vector1_7e1aa9adecd448fb8c58a19a4293420d: 2.05
+    - Vector1_DF67068C: 0.09
+    - Vector1_F6F2B576: 1
+    - Vector1_a0387645995c4b9f93ec3eafa56218ea: 1
+    - Vector1_b9371dc7f33d48d0a4385c3a70a2c712: 2.15
+    - Vector1_e18fcdc8d6a14102b1eb7f73c0f383cf: 0.75
+    - _Alpha: 0.9
+    - _BumpScale: 1
+    - _Depth: 0
+    - _FoarmScale: 30
+    - _ForamDistance: 0.6
+    - _ForamIntensity: 2.8
+    - _RimIntensity: 2
+    - _RimRange: 2
+    - _SecondBumpScale: 1
+    - _Smoothness: 0.58
+    - _Specular: 0.33
+    m_Colors:
+    - Color_A144F4A5: {r: 0.5246529, g: 0.8490566, b: 0.5981844, a: 0}
+    - Color_BE3B8554: {r: 0.10720008, g: 0.6886792, b: 0.64262146, a: 0}
+    - Color_c9d9a2bdfc8c4416be75df941588eeb4: {r: 1, g: 1, b: 1, a: 0}
+    - Color_f04bede9281d4dc8b731c860c1d160e6: {r: 0.107645065, g: 0.28486568, b: 0.5566038,
+        a: 0}
+    - Vector4_3BC302A8: {r: 2, g: 2, b: 0.06, a: 0.06}
+    - Vector4_4C2BE34C: {r: 2, g: 2, b: -0.09, a: -0.06}
+    - Vector4_92674d59b9164750be818932eccf16df: {r: 1, g: 1, b: 0.02, a: 0}
+    - _BumpMapST: {r: 2, g: 2, b: 0.06, a: 0.06}
+    - _DepthColor: {r: 0.09834459, g: 0.15767676, b: 0.24528292, a: 0}
+    - _FarColor: {r: 0.10588237, g: 0.6901961, b: 0.6415094, a: 0}
+    - _FoarmColor: {r: 1, g: 1, b: 1, a: 0}
+    - _FoarmDistortion: {r: 0.2, g: 0.2, b: 0.1, a: 0}
+    - _NearColor: {r: 0.5254902, g: 0.8509804, b: 0.6, a: 0}
+    - _SecondBumpMapST: {r: 2, g: 2, b: -0.09, a: -0.06}
+  m_BuildTextureStacks: []

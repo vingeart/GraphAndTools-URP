@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Unlit_Parallax
+  m_Shader: {fileID: -6465566751694194690, guid: 36aa8ab7bc008354a93f74bd8a867dc0,
+    type: 3}
+  m_ShaderKeywords: ENUM_C2983941ED0941FFBC20CEBD005CF4F0_C
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_42d5f25039774bd4bb67d0dbe8c09fc5:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: d346ae6821314d24581dd9823d8a71a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 2800000, guid: d346ae6821314d24581dd9823d8a71a7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - ENUM_C2983941ED0941FFBC20CEBD005CF4F0: 2
+    - Vector1_0e44b117e8604adcb05d022d7445c222: 15.06
+    - Vector1_25f2fb67bb15481783dd5a29d7581095: 0.082
+    - Vector1_5ee2f4abda0446f1b3681a4b674d750b: 1
+    - Vector1_67c3ce2130d94be883a3449b7cad8369: 1
+    - Vector1_70e277ac0dee4612a4462f533e38dabd: 0.5
+    - Vector1_9b5ddb0e691745e18a967d4ba9133945: 0
+    - Vector1_9d2299d332734c4eaa1388d2b02c4cc4: 11.57
+    - Vector1_c828da34d95843ac9af02f73dd9a8a3d: 1
+    - Vector1_c944d3da19a446a085cfd85c94388cb9: 0.6
+    - _Amplitude: 3
+    - _CrystalIOR: 1.78
+    - _EmissionIntensity: 1
+    - _Metallic: 0.8
+    - _OldParallaxBool: 0
+    - _Smoothness: 0.6
+    - _Steps: 32
+    - _fengexian: 0
+    - _fengexian_1: 0
+    - _fengexian_2: 0
+    m_Colors:
+    - Color_075ae51f366b4ffdaffa30055b894c6f: {r: 0, g: 0.12173306, b: 0.6320754,
+        a: 0}
+    - Color_a407e7aa43cd457d86b8c2b71bd17bfb: {r: 2.2531896, g: 2.6082377, b: 2.4853365,
+        a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 3.482202, g: 3.482202, b: 3.482202, a: 1}
+  m_BuildTextureStacks: []

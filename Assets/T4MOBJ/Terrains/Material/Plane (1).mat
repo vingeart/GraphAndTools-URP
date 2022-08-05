@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Plane (1)
+  m_Shader: {fileID: -6465566751694194690, guid: 05088fe061e88b94783fd1a6d61923ed,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpSplat0:
+        m_Texture: {fileID: 2800000, guid: 83ac59a4410169b4ab43b438e1766609, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpSplat1:
+        m_Texture: {fileID: 2800000, guid: 84cf7827b67f48f488bb1141a3f7cd3f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpSplat2:
+        m_Texture: {fileID: 2800000, guid: 20739fc8ba876a649b82776f96b563c2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpSplat3:
+        m_Texture: {fileID: 2800000, guid: 20dd9debc73fc8a40b99fb86b6f92073, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Control:
+        m_Texture: {fileID: 2800000, guid: 78f9bcb444f3c434abd60db27c33c8cd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Splat0:
+        m_Texture: {fileID: 2800000, guid: 847c0296c31e68d4e845283e3ed955ea, type: 3}
+        m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
+    - _Splat1:
+        m_Texture: {fileID: 2800000, guid: 08dcc7d631cb6514391d53af80309844, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - _Splat2:
+        m_Texture: {fileID: 2800000, guid: b8e9f5b758ed2334688b74c7109f3ae9, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    - _Splat3:
+        m_Texture: {fileID: 2800000, guid: a921425fbcbafad4ab9637056f0e1a14, type: 3}
+        m_Scale: {x: 10, y: 10}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _GloosL0: 0
+    - _GloosL1: 0
+    - _GloosL2: 0
+    - _GloosL3: 0
+    - _ShininessL0: 0.078
+    - _ShininessL1: 0.078
+    - _ShininessL2: 0.078
+    - _ShininessL3: 0.078
+    m_Colors:
+    - _Splat0TilingAndOffset: {r: 2.5, g: 2.5, b: 0, a: 0}
+    - _Splat1TilingAndOffset_1: {r: 3.4, g: 3.4, b: 0.46, a: 0.46}
+    - _Splat2TilingAndOffset_2: {r: 5, g: 5, b: 0.25, a: 0.25}
+    - _Splat3TilingAndOffset_1: {r: 5, g: 5, b: 0.26, a: 0.26}

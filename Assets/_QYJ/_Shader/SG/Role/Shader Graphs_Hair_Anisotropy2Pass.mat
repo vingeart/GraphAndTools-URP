@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Shader Graphs_Hair_Anisotropy2Pass
+  m_Shader: {fileID: -6465566751694194690, guid: 7f362268c6280f847bdfb381db1cc27e,
+    type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_2f0c00d1d4904c5d892228eb8dcf7381: 9
+    - Vector1_7ac3d2c1dca7452585a27a624347133d: -5.21
+    - Vector1_7f92dc3e88c14feb9a9d4e079070d185: 210.2
+    - Vector1_7fcafefafbb04aa0b2a016b1e183bfa6: 1
+    - Vector1_8945e2f06351410fa1a18fd8de3e65ee: 14
+    - Vector1_efa6622131c04114958d270bf36ff5cb: 3.77
+    - Vector1_f29c98ea034b4b59bd519759b1372088: 5.14
+    - _SpecularRange: 1
+    m_Colors:
+    - _PointLight: {r: 1, g: 1, b: -1.25, a: 0}
+  m_BuildTextureStacks: []

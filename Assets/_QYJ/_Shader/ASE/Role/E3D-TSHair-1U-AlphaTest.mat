@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hair_Anisotropy
-  m_Shader: {fileID: 4800000, guid: 58482f95c8e55544488b7e65bf1b0f78, type: 3}
+  m_Name: E3D-TSHair-1U-AlphaTest
+  m_Shader: {fileID: 4800000, guid: 6606f5739c0ec4e4e92224dd23813d9b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,12 +19,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BaseMap:
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 551b2b916266a2f4082d3ffd3546e3fc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
         m_Texture: {fileID: 2800000, guid: 737f4615796b867419657b1de36b7bbf, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 551b2b916266a2f4082d3ffd3546e3fc, type: 3}
+    - _MaskMap:
+        m_Texture: {fileID: 2800000, guid: 607a1288072a01b4c8974b65383f253c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
@@ -37,19 +41,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _AniIntensity: 1
-    - _AnisoTBStrength: 3.6817648
-    - _Anisotropic: 0.445
-    - _Brightness: 1
-    - _BumpScale: 0.5
-    - _Cutoff: 1
-    - _Float1: 1.19
-    - _NScale: 1
-    - _Smoothness: 0.36
-    - _Smoothnss: 0.5
+    - _Alphainstensity: 1
+    - _AnisotropyBias: -1
+    - _AnisotropyRang1: 53
+    - _AnisotropyRang2: 420
+    - _Exp: 100.5
+    - _HLFrePower: 0
+    - _HightlightIntensity: 0.672
+    - _HightlightSharpness: 0.055
+    - _MaskBBreakAO: 0
+    - _PBRInstensity: 0
+    - _Smoothness: 0.2
     m_Colors:
-    - _BaseColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
-    - _Color: {r: 0.12264148, g: 0.12264148, b: 0.12264148, a: 1}
+    - _AlbedoColor: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 0.997}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SpecColor: {r: 0.09433959, g: 0.09433959, b: 0.09433959, a: 1}
+    - _R1SpecalurColor: {r: 0.9632353, g: 0.9038391, b: 0.8499135, a: 0}
+    - _R2SpecalurColor: {r: 0.9632353, g: 0.9038391, b: 0.8499135, a: 0}
   m_BuildTextureStacks: []

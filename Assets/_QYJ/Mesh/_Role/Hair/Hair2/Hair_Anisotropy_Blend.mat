@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Hair_Anisotropy
-  m_Shader: {fileID: 4800000, guid: 58482f95c8e55544488b7e65bf1b0f78, type: 3}
+  m_Name: Hair_Anisotropy_Blend
+  m_Shader: {fileID: 4800000, guid: d974e583b0abd074895f03fd56395033, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3002
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -42,8 +42,7 @@ Material:
     - _Anisotropic: 0.445
     - _Brightness: 1
     - _BumpScale: 0.5
-    - _Cutoff: 1
-    - _Float1: 1.19
+    - _Float1: 0
     - _NScale: 1
     - _Smoothness: 0.36
     - _Smoothnss: 0.5

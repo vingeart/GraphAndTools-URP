@@ -57,8 +57,9 @@ Material:
     - Vector1_f29c98ea034b4b59bd519759b1372088: 5.14
     - _BumpScale: 0.5
     - _SpecularRange: 0.54
+    - _Width: 13.5
     m_Colors:
     - _Color: {r: 0, g: 0, b: 0, a: 1}
     - _PointLight: {r: 1, g: 1, b: -44.7, a: 0}
-    - _SpecColor: {r: 0.3301887, g: 0.3301887, b: 0.3301887, a: 1}
+    - _SpecColor: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
   m_BuildTextureStacks: []

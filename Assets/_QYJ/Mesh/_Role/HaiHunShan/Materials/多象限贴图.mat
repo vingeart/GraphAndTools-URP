@@ -138,7 +138,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _Brightness: 0.26
+    - _Brightness: 0.15
     - _Float0: 0
     - _SPECULAR_ROUGHNESS: 0.5
     - _SPECULAR_SMOOTHNESS: 0.5

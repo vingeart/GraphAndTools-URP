@@ -1084,7 +1084,7 @@
             "m_Guid": ""
         }
     },
-    "m_Path": "Shader Graphs",
+    "m_Path": "VG/Shader Graphs/Role",
     "m_ConcretePrecision": 0,
     "m_PreviewMode": 2,
     "m_OutputNode": {
@@ -2175,9 +2175,9 @@
     "m_Guid": {
         "m_GuidSerialized": "d069f5d8-11c5-4b11-8e3d-45d46344586b"
     },
-    "m_Name": "Width",
+    "m_Name": "宽度",
     "m_DefaultReferenceName": "Vector1_2f0c00d1d4904c5d892228eb8dcf7381",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "_Width",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,
@@ -3635,7 +3635,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "6f7ee672df244ddfa38c208ba4050a8a",
     "m_Id": 0,
-    "m_DisplayName": "Width",
+    "m_DisplayName": "宽度",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",

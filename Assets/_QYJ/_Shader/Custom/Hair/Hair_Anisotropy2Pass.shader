@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Character/Hair/Hair_Anisotropy2Pass" 
+Shader "VG/Custom/Hair_Anisotropy2Pass" 
 {
 	Properties 
 	{
@@ -8,7 +8,7 @@ Shader "Character/Hair/Hair_Anisotropy2Pass"
 		_MainTex ("Diffuse (RGB) Alpha (A)", 2D) = "white" {}
 		
         _NormalTex ("Normal Map", 2D) = "Black" {}
-		_NormalScale("Normal Scale", Range(0, 10)) = 1
+		_NormalScale("Normal Scale", Range(-2, 2)) = 1
 		_Specular ("Specular Amount", Range(0, 5)) = 1.0 
         _SpecularColor ("Specular Color1", Color) = (1,1,1,1)
         _SpecularColor2 ("Specular Color2", Color) = (0.5,0.5,0.5,1)

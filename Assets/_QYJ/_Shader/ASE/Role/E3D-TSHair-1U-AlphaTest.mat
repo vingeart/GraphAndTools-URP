@@ -19,6 +19,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 737f4615796b867419657b1de36b7bbf, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: 551b2b916266a2f4082d3ffd3546e3fc, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -32,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal:
-        m_Texture: {fileID: 2800000, guid: 551b2b916266a2f4082d3ffd3546e3fc, type: 3}
+        m_Texture: {fileID: 2800000, guid: 96c7943230eebf641a9ba76f0f616f81, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -41,21 +45,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaCutoff: 0.5
-    - _Alphainstensity: 1
-    - _AnisotropyBias: -1
-    - _AnisotropyRang1: 53
-    - _AnisotropyRang2: 420
+    - _Alphainstensity: 1.6
+    - _AnisotropyBias: -1.06
+    - _AnisotropyRang1: 26
+    - _AnisotropyRang2: 345
+    - _BumpScale: 0.73
     - _Exp: 100.5
-    - _HLFrePower: 0
+    - _HLFrePower: 1.39
     - _HightlightIntensity: 0.672
     - _HightlightSharpness: 0.055
     - _MaskBBreakAO: 0
+    - _Metallic: 0.53
     - _PBRInstensity: 0
-    - _Smoothness: 0.2
+    - _Smoothness: 0.225
     m_Colors:
-    - _AlbedoColor: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 0.997}
+    - _AlbedoColor: {r: 1, g: 1, b: 1, a: 0.997}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _R1SpecalurColor: {r: 0.9632353, g: 0.9038391, b: 0.8499135, a: 0}
-    - _R2SpecalurColor: {r: 0.9632353, g: 0.9038391, b: 0.8499135, a: 0}
+    - _R1SpecalurColor: {r: 0.7169812, g: 0.5309719, b: 0.5309719, a: 0}
+    - _R2SpecalurColor: {r: 0.7490196, g: 0.7490196, b: 0.7490196, a: 0}
   m_BuildTextureStacks: []

@@ -13,7 +13,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2999
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -88,6 +88,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - Vector1_3152627d33af4472bcf4c10b50659399: 0
+    - Vector1_7ac3d2c1dca7452585a27a624347133d: 15
+    - Vector1_7f92dc3e88c14feb9a9d4e079070d185: 300
+    - Vector1_8945e2f06351410fa1a18fd8de3e65ee: 500
+    - Vector1_efa6622131c04114958d270bf36ff5cb: 3
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _AnisoTBStrength: 3.06
@@ -98,7 +103,7 @@ Material:
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
-    - _Cutoff: 0.5
+    - _Cutoff: 0.537
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
@@ -125,9 +130,11 @@ Material:
     - _SpecularHighlights: 1
     - _SpecularMultiplier: 300
     - _SpecularMultiplier2: 30
+    - _SpecularRange: 1
     - _SrcBlend: 1
     - _Surface: 1
     - _UVSec: 0
+    - _Width: 1
     - _WorkflowMode: 1
     - _ZWrite: 0
     m_Colors:
@@ -137,6 +144,7 @@ Material:
     - _EMISSION_COLOR: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
+    - _PointLight: {r: 1, g: 1, b: -1.25, a: 0}
     - _SPECULAR_COLOR: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _SpecularColor: {r: 0.5754717, g: 0.5754717, b: 0.5754717, a: 1}

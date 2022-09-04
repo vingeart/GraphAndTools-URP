@@ -1,0 +1,186 @@
+fileFormatVersion: 2
+guid: 40d2e6f20a783894a9c86ddf9c67baf0
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable:
+  - first:
+      74: 4406820100457198562
+    second: nidle
+  - first:
+      74: 3037031141646109492
+    second: cidle
+  - first:
+      74: -1907420669134981427
+    second: customizer_scale
+  - first:
+      74: -139364887524879693
+    second: move
+  - first:
+      74: -5455075036266976943
+    second: die
+  - first:
+      74: 1337066675430262922
+    second: die_air
+  - first:
+      74: -3632943071713492925
+    second: dungeon_end_idle
+  - first:
+      74: 3397538432605026196
+    second: hit_air
+  - first:
+      74: -9129649453144676022
+    second: hit_air_knockdown
+  - first:
+      74: -1194288148235383774
+    second: hit_dash_pounding
+  - first:
+      74: -7260058617445770393
+    second: hit_fly
+  - first:
+      74: -3027763463807095160
+    second: hit_groggy
+  - first:
+      74: 2100466513941840331
+    second: hit_groggy_pvp
+  - first:
+      74: 512809256177757122
+    second: hit_knockdown
+  - first:
+      74: 1790883102235713560
+    second: hit_stand
+  - first:
+      74: -8316118349585776664
+    second: hit_standup
+  - first:
+      74: 8561175582301062522
+    second: hit_stun
+  - first:
+      74: -7864137198409977152
+    second: ringout
+  - first:
+      74: 2745719009614880547
+    second: move_dash
+  - first:
+      74: 5728097656903896846
+    second: movetoidle
+  - first:
+      74: -2794802765738272159
+    second: autodash
+  - first:
+      74: -6518988796502625012
+    second: sp_dash
+  - first:
+      74: -9222177367483235554
+    second: sp_finish_01
+  - first:
+      74: 1793494331321481494
+    second: sp_finish_02
+  - first:
+      74: -7444648241387623860
+    second: sp_finish_03
+  - first:
+      74: 5068381252893062915
+    second: sp_finish_04
+  - first:
+      74: 4104068351166400418
+    second: nrun
+  - first:
+      74: 3358193636773034111
+    second: Guard_hit
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

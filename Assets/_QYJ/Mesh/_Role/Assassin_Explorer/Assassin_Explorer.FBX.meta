@@ -6,7 +6,32 @@ ModelImporter:
   - first:
       74: 1827226128182048838
     second: Take 001
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Assassin_Body_Explorer_Col0
+    second: {fileID: 2100000, guid: d8db42e6807528a4b96ce21c051476c4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Assassin_Cape_Explorer_Col0
+    second: {fileID: 2100000, guid: 8f8f6798b3612cb42a2b09b738753b99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Assassin_Face
+    second: {fileID: 2100000, guid: b8cac9c7a8e84604c873b3d9c403e4e1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Assassin_Head_Explorer_Col0
+    second: {fileID: 2100000, guid: 8c5111439607932419e5a8482b02eb26, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Assassin_Weapon_Explorer_Col0
+    second: {fileID: 2100000, guid: 51bd412ab1b5fe043a32a037b67bbdb2, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

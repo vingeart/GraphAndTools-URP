@@ -2919,7 +2919,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "e255d84100ae477c8c19e8392993e66e",
     "m_Id": 0,
-    "m_DisplayName": "V",
+    "m_DisplayName": "SSS",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",

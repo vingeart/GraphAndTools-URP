@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Eye
-  m_Shader: {fileID: 4800000, guid: 9b24d1d889ec2af45a7b937212039add, type: 3}
+  m_Name: Eye 1
+  m_Shader: {fileID: 4800000, guid: 4bc00942a1ba46443b414b3d9d091ef8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -37,7 +37,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 92c72a8c9837e9f40bcb7ef7c2ca6947, type: 3}
+        m_Texture: {fileID: 2800000, guid: e0a0a5dc3dbcfec4880089d93f66727e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -53,6 +53,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Eye:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -72,6 +76,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1f530e5d17450024595cf04e38f848e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Matcap:
+        m_Texture: {fileID: 2800000, guid: 1f530e5d17450024595cf04e38f848e0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -88,8 +96,8 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _PupilMap:
-        m_Texture: {fileID: 2800000, guid: ff81a3b921c254344b85e904bab3747e, type: 3}
+    - _Pupil:
+        m_Texture: {fileID: 2800000, guid: 91f8d8451f7c6e24ab99f6f7fea939a0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -116,7 +124,6 @@ Material:
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
     - _Blend: 0
-    - _Brightness: 1.5
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -126,15 +133,12 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _EyeSize: 2.144
-    - _EyeSmoothness: 1
     - _Float0: 0
-    - _Float4: 0
+    - _Float1: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _MatcapIntensity: 0.58
-    - _MatcapLighting: 2
+    - _MatcapLighting: 2.24
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -142,30 +146,26 @@ Material:
     - _PuilDepthScale: 0.4
     - _PuilHeight: 0.27
     - _PuilSoft: 0.221
-    - _PupilHeight: 0.36
-    - _PupilScale: 0.4
-    - _PupilSmoothness: 0.8
-    - _PupilSoft: 0.1
+    - _PupilHeight: 0.27
+    - _PupilSize: 1
+    - _PupilSoft: 0.1058824
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SizeEyes: 2.971
-    - _SizePupil: -0.123
-    - _Smooth: 1
-    - _Smoothness: 0.5
+    - _SizePupil: -0.175
+    - _Smooth: 0
+    - _Smoothness: 0.511
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _UVSec: 0
-    - _WhiteSmooth: 1
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.46647656, g: 0.46647656, b: 0.46647656, a: 1}
     - _Color: {r: 0.18431373, g: 0.18431373, b: 0.18431373, a: 1}
-    - _Color0: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _EyesColor: {r: 0.4292453, g: 0.6543317, b: 1, a: 0}
-    - _PupilColor: {r: 0.4038359, g: 0.55569154, b: 0.7075472, a: 0}
-    - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _EyesColor: {r: 0.5671057, g: 0.6108766, b: 0.6792453, a: 0}
+    - _SpecColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

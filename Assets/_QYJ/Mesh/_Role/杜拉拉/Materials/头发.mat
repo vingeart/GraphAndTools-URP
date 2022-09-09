@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: d6c3bd5d9f10161478f80a49f763b26e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 51a20ed79cac47b4a88df5505de3dc64, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -41,13 +41,14 @@ Material:
     - _Anisotropy1Rang: 1.6
     - _Anisotropy2Rang: 4
     - _AnisotropyOffset: -1.14
-    - _AnisotropySpecRang: 0.01
+    - _AnisotropySpecRang: 0.3
+    - _Brightness: 1
     - _BumpScale: 0.5
-    - _Cutoff: 0.5
+    - _Cutoff: 0.55
     - _Metallic: 0.3
     - _Smoothness: 0.3
     m_Colors:
-    - _Anisotropy1SpecColor: {r: 0.5471698, g: 0.36391956, b: 0.36391956, a: 0}
+    - _Anisotropy1SpecColor: {r: 0.5471698, g: 0.36391947, b: 0.36391947, a: 0}
     - _Anisotropy2SpecColor1: {r: 0.5188679, g: 0.48282304, b: 0.45278567, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0.997}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}

@@ -60,17 +60,17 @@ Material:
     - _BumpScale: 0.65
     - _Cull: 2
     - _Cutoff: 0.5
-    - _Metallic: 1
+    - _Metallic: 0.156
     - _NormalScale: 0.64
     - _PrimaryShift: -1.13
     - _SecondaryShift: -1.1
-    - _Smoothness: 0.281
+    - _Smoothness: 0.18
     - _Specular: 4.08
     - _SpecularMultiplier: 300
     - _SpecularMultiplier2: 50
     m_Colors:
-    - _Anisotropy1SpecColor: {r: 1, g: 1, b: 1, a: 0}
-    - _Anisotropy2SpecColor1: {r: 1, g: 1, b: 1, a: 0}
+    - _Anisotropy1SpecColor: {r: 0.9150943, g: 0.88487893, b: 0.88487893, a: 0}
+    - _Anisotropy2SpecColor1: {r: 0.3207547, g: 0.31318974, b: 0.31318974, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}

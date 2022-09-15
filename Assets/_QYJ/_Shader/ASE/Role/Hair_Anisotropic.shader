@@ -2286,7 +2286,7 @@ Shader "VG/ASE/Role/Hair_Anisotropic"
 }
 /*ASEBEGIN
 Version=18900
-583;729;1336;270;-399.8995;245.4785;1;True;True
+583;479;1336;520;-398.6145;245.4435;1.005;True;True
 Node;AmplifyShaderEditor.CommentaryNode;142;-1794.297,-319.6868;Inherit;False;1674.286;508.7974;;14;263;271;159;148;156;155;140;138;139;79;137;235;77;65;各向异性;1,1,1,1;0;0
 Node;AmplifyShaderEditor.SamplerNode;65;-1780.61,-85.05431;Inherit;True;Property;_MaskMap;遮罩图（RG各向异性 BAO）;5;0;Create;False;0;0;0;False;0;False;-1;None;607a1288072a01b4c8974b65383f253c;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.RangedFloatNode;77;-1652.375,102.8873;Float;False;Property;_AnisotropyOffset;各向异性偏移;7;0;Create;False;0;0;0;False;0;False;-1.5;-1.14;0;0;0;1;FLOAT;0
@@ -2301,10 +2301,10 @@ Node;AmplifyShaderEditor.DotProductOpNode;156;-831.6837,-157.9501;Inherit;False;
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;148;-710.9123,-170.2248;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.OneMinusNode;159;-591.0815,-170.6231;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.CommentaryNode;166;645.0734,486.606;Inherit;False;822.4626;405.0605;;8;119;276;261;118;273;117;115;116;高光范围;1,1,1,1;0;0
+Node;AmplifyShaderEditor.WorldNormalVector;116;654.7882,674.2842;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.ViewDirInputsCoordNode;115;674.7947,528.0892;Float;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.CommentaryNode;144;-68.35479,-498.5406;Inherit;False;1574.327;869.0638;;17;274;76;232;262;191;176;236;238;190;75;164;239;264;265;266;189;161;各向异性高光;1,1,1,1;0;0
 Node;AmplifyShaderEditor.SaturateNode;271;-449.1577,-170.8649;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ViewDirInputsCoordNode;115;674.7947,528.0892;Float;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.WorldNormalVector;116;654.7882,674.2842;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
 Node;AmplifyShaderEditor.DotProductOpNode;117;854.3765,582.955;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;189;-45.88848,-26.63197;Float;False;Property;_Anisotropy2Rang;各向异性2范围;12;0;Create;False;0;0;0;False;0;False;7.5;4;1;20;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RangedFloatNode;119;657.7197,815.5618;Float;False;Property;_AnisotropySpecRang;各向异性高光范围;8;0;Create;False;0;0;0;False;0;False;0.01;0.3;0.01;1;0;1;FLOAT;0
@@ -2315,11 +2315,11 @@ Node;AmplifyShaderEditor.Exp2OpNode;265;216.5607,-238.6703;Inherit;False;1;0;FLO
 Node;AmplifyShaderEditor.Exp2OpNode;266;219.5607,-21.67052;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.GetLocalVarNode;264;112.6082,-153.9786;Inherit;False;263;_AnisotropyVar;1;0;OBJECT;;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SaturateNode;273;979.4221,582.7809;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.PowerNode;190;351.5372,-45.94872;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;75;370.7734,-435.5496;Float;False;Property;_Anisotropy1SpecColor;各向异性1高光颜色;9;0;Create;False;0;0;0;False;0;False;0.9632353,0.9038391,0.8499135,0;0.5471698,0.3639195,0.3639195,0;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.PowerNode;164;345.5052,-263.1777;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.ColorNode;239;380.9693,166.448;Float;False;Property;_Anisotropy2SpecColor1;各向异性2高光颜色;10;1;[HDR];Create;False;0;0;0;False;0;False;0.9632353,0.9038391,0.8499135,0;0.5188679,0.482823,0.4527857,0;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
 Node;AmplifyShaderEditor.PowerNode;118;1124.524,583.2371;Inherit;False;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;239;380.9693,166.448;Float;False;Property;_Anisotropy2SpecColor1;各向异性2高光颜色;10;1;[HDR];Create;False;0;0;0;False;0;False;0.9632353,0.9038391,0.8499135,0;0.5188679,0.482823,0.4527857,0;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PowerNode;164;345.5052,-263.1777;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.ColorNode;75;370.7734,-435.5496;Float;False;Property;_Anisotropy1SpecColor;各向异性1高光颜色;9;0;Create;False;0;0;0;False;0;False;0.9632353,0.9038391,0.8499135,0;0.5471698,0.3639195,0.3639195,0;False;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.PowerNode;190;351.5372,-45.94872;Inherit;True;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;238;617.2404,-346.7212;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SimpleMultiplyOpNode;236;620.9753,45.1492;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.SamplerNode;176;600.6503,155.8537;Inherit;True;Property;_TextureSample1;Texture Sample 1;5;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Instance;65;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
@@ -2332,8 +2332,8 @@ Node;AmplifyShaderEditor.SamplerNode;257;2581.142,-280.1312;Inherit;True;Propert
 Node;AmplifyShaderEditor.RangedFloatNode;277;2615.057,86.29567;Inherit;False;Property;_Brightness;亮度;1;0;Create;False;0;0;0;False;0;False;1;0;0;3;0;1;FLOAT;0
 Node;AmplifyShaderEditor.RegisterLocalVarNode;274;1260.182,-59.63565;Inherit;True;_AnisotropySpecVar;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.ColorNode;221;2670.518,-88.40792;Float;False;Property;_Color;基础色;0;1;[HDR];Create;False;0;0;0;False;0;False;0.9779412,0.7868161,0.6831207,0.997;1,1,1,0.997;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;256;2933.789,-155.3295;Inherit;False;3;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.GetLocalVarNode;275;2900.88,-244.7555;Inherit;False;274;_AnisotropySpecVar;1;0;OBJECT;;False;1;COLOR;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;256;2933.789,-155.3295;Inherit;False;3;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;135;2948.966,-46.40846;Float;False;Property;_Metallic;金属度;13;0;Create;False;0;0;0;False;0;False;0.3;0.3;0;1;0;1;FLOAT;0
 Node;AmplifyShaderEditor.SimpleAddOpNode;258;3153.36,-210.8434;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
 Node;AmplifyShaderEditor.RangedFloatNode;255;2655.059,171.2822;Inherit;False;Property;_BumpScale;法线强度;4;0;Create;False;0;0;0;False;0;False;1;0.5;-2;2;0;1;FLOAT;0
@@ -2369,12 +2369,12 @@ WireConnection;276;2;119;0
 WireConnection;265;0;161;0
 WireConnection;266;0;189;0
 WireConnection;273;0;117;0
-WireConnection;190;0;264;0
-WireConnection;190;1;266;0
-WireConnection;164;0;264;0
-WireConnection;164;1;265;0
 WireConnection;118;0;273;0
 WireConnection;118;1;276;0
+WireConnection;164;0;264;0
+WireConnection;164;1;265;0
+WireConnection;190;0;264;0
+WireConnection;190;1;266;0
 WireConnection;238;0;75;0
 WireConnection;238;1;164;0
 WireConnection;236;0;190;0
@@ -2400,4 +2400,4 @@ WireConnection;248;4;120;0
 WireConnection;248;6;257;4
 WireConnection;248;7;268;0
 ASEEND*/
-//CHKSM=274358DD95265A41166A07526CA3180D757A9824
+//CHKSM=C36B4809DD67D0AF0AF6F1CC03942ED6392E8D44

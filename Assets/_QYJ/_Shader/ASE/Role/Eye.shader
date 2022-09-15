@@ -1,23 +1,27 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "VG/ASE/Role/Skin_S2_SD2"
+Shader "VG/ASE/Role/Eye"
 {
 	Properties
 	{
-		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
 		[HideInInspector] _EmissionColor("Emission Color", Color) = (1,1,1,1)
-		[ASEBegin]_Color("颜色", Color) = (1,1,1,1)
-		_Brightness("补光", Float) = 0
-		_BaseMap("基础图", 2D) = "white" {}
+		[HideInInspector] _AlphaCutoff("Alpha Cutoff ", Range(0, 1)) = 0.5
+		[ASEBegin]_Brightness("眼球亮度", Range( 0 , 3)) = 1
+		_PupilColor("瞳孔颜色", Color) = (1,1,1,1)
+		_PupilMap("瞳孔贴图(RGB颜色A瞳孔遮罩)", 2D) = "white" {}
+		_MainTexW("眼白", 2D) = "white" {}
 		_BumpMap("法线图", 2D) = "bump" {}
 		_BumpScale("法线强度", Range( -2 , 2)) = 1
-		_MaskMap("遮罩图（RGB高光A平滑度）", 2D) = "white" {}
-		_SpecColor("高光颜色", Color) = (1,1,1,1)
-		_Smoothness("平滑度", Range( 0 , 1)) = 0.5
-		_SSSMap("SSSMap", 2D) = "white" {}
-		_SSS("SSS", Range( 0 , 1)) = 1
-		_SSSIntensity("SSS强度", Range( 0 , 5)) = 1
-		[ASEEnd]_SSSMask("SSS遮罩图", 2D) = "white" {}
+		_MatCapMap("MatCap贴图", 2D) = "white" {}
+		_MatcapIntensity("Matcap强度", Range( 0 , 5)) = 2
+		_Specular("高光", Range( 0 , 1)) = 0
+		_PupilSmoothness("瞳孔平滑度", Range( 0 , 1)) = 1
+		_EyeSmoothness("眼白平滑度", Range( 0 , 1)) = 1
+		_EyeSize("眼珠大小", Range( 2 , 3.5)) = 2
+		_SizePupil("瞳孔大小", Range( -0.5 , 0.5)) = 0
+		_PupilSoft("瞳孔柔和度", Range( 0 , 0.3)) = 0.1058824
+		_PupilHeight("瞳孔视差高度", Range( 0 , 3)) = 0.27
+		[ASEEnd]_PupilScale("瞳孔视差强度", Range( 0 , 1)) = 0.4
 		[HideInInspector] _texcoord( "", 2D ) = "white" {}
 
 		//_TransmissionShadow( "Transmission Shadow", Range( 0, 1 ) ) = 0.5
@@ -166,10 +170,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			
 
 			HLSLPROGRAM
-			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_TS 1
 			#pragma multi_compile_instancing
-			#define _EMISSION
+			#define _SPECULAR_SETUP 1
 			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 999999
 
@@ -209,8 +212,10 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
+			#define ASE_NEEDS_FRAG_WORLD_TANGENT
 			#define ASE_NEEDS_FRAG_WORLD_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_BITANGENT
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
 
 
 			struct VertexInput
@@ -244,17 +249,19 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Color;
-			float4 _BaseMap_ST;
-			float4 _BumpMap_ST;
-			float4 _SSSMask_ST;
-			float4 _SpecColor;
-			float4 _MaskMap_ST;
+			float4 _MainTexW_ST;
+			float4 _PupilColor;
+			float _EyeSize;
 			float _BumpScale;
+			float _MatcapIntensity;
 			float _Brightness;
-			float _SSSIntensity;
-			float _SSS;
-			float _Smoothness;
+			float _PupilHeight;
+			float _PupilScale;
+			float _SizePupil;
+			float _PupilSoft;
+			float _Specular;
+			float _EyeSmoothness;
+			float _PupilSmoothness;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -275,11 +282,10 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			sampler2D _BaseMap;
+			sampler2D _MatCapMap;
 			sampler2D _BumpMap;
-			sampler2D _SSSMap;
-			sampler2D _SSSMask;
-			sampler2D _MaskMap;
+			sampler2D _PupilMap;
+			sampler2D _MainTexW;
 
 
 			
@@ -479,28 +485,42 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float2 uv_BaseMap = IN.ase_texcoord7.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
-				float4 _BaseVar55 = ( _Color * tex2D( _BaseMap, uv_BaseMap ) );
+				float _EyeSize53 = _EyeSize;
+				float2 texCoord104 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 _PupilUVVar112 = ( ( _EyeSize53 * ( texCoord104 + float2( -0.5,-0.5 ) ) ) + float2( 0.5,0.5 ) );
+				float3 unpack111 = UnpackNormalScale( tex2D( _BumpMap, _PupilUVVar112 ), _BumpScale );
+				unpack111.z = lerp( 1, unpack111.z, saturate(_BumpScale) );
+				float3 _NormalVar182 = unpack111;
+				float3 tanToWorld0 = float3( WorldTangent.x, WorldBiTangent.x, WorldNormal.x );
+				float3 tanToWorld1 = float3( WorldTangent.y, WorldBiTangent.y, WorldNormal.y );
+				float3 tanToWorld2 = float3( WorldTangent.z, WorldBiTangent.z, WorldNormal.z );
+				float3 tanNormal146 = _NormalVar182;
+				float3 worldNormal146 = normalize( float3(dot(tanToWorld0,tanNormal146), dot(tanToWorld1,tanNormal146), dot(tanToWorld2,tanNormal146)) );
+				float4 tex2DNode1 = tex2D( _PupilMap, _PupilUVVar112 );
+				float _EyeEdge140 = tex2DNode1.a;
+				float4 _MatcapVar193 = ( tex2D( _MatCapMap, ( float3( 0.5,0.5,0.5 ) + ( mul( UNITY_MATRIX_V, float4( worldNormal146 , 0.0 ) ).xyz * float3( 0.5,0.5,0.5 ) ) ).xy ) * _MatcapIntensity * _EyeEdge140 );
+				float2 uv_MainTexW = IN.ase_texcoord7.xy * _MainTexW_ST.xy + _MainTexW_ST.zw;
+				float3 ase_tanViewDir =  tanToWorld0 * WorldViewDirection.x + tanToWorld1 * WorldViewDirection.y  + tanToWorld2 * WorldViewDirection.z;
+				ase_tanViewDir = SafeNormalize( ase_tanViewDir );
+				float2 Offset95 = ( ( _PupilHeight - 1 ) * ase_tanViewDir.xy * ( _PupilScale * tex2DNode1.a ) ) + _PupilUVVar112;
+				float2 _ParallaxUVVar129 = Offset95;
+				float2 normalizeResult10 = normalize( ( float2( 0.5,0.5 ) * ( _ParallaxUVVar129 + float2( -0.5,-0.5 ) ) ) );
+				float2 lerpResult26 = lerp( _ParallaxUVVar129 , ( normalizeResult10 + float2( 0.5,0.5 ) ) , ( ( 0.8 / _EyeSize53 ) * _SizePupil ));
+				float4 _PupilVar197 = ( tex2D( _PupilMap, lerpResult26 ) * _PupilColor );
+				float _EyeSoftVar177 = saturate( (0.0 + (_EyeEdge140 - 0.0) * (1.0 - 0.0) / (_PupilSoft - 0.0)) );
+				float4 lerpResult52 = lerp( tex2D( _MainTexW, uv_MainTexW ) , _PupilVar197 , _EyeSoftVar177);
 				
-				float2 uv_BumpMap = IN.ase_texcoord7.xy * _BumpMap_ST.xy + _BumpMap_ST.zw;
-				float3 unpack11 = UnpackNormalScale( tex2D( _BumpMap, uv_BumpMap ), _BumpScale );
-				unpack11.z = lerp( 1, unpack11.z, saturate(_BumpScale) );
+				float3 temp_cast_4 = (_Specular).xxx;
 				
-				float3 normalizeResult49 = normalize( WorldViewDirection );
-				float dotResult26 = dot( normalizeResult49 , WorldNormal );
-				float2 appendResult33 = (float2(( 1.0 - ( 0.5 + ( dotResult26 * 0.5 ) ) ) , _SSS));
-				float2 uv_SSSMask = IN.ase_texcoord7.xy * _SSSMask_ST.xy + _SSSMask_ST.zw;
-				float4 _SSSVar52 = ( _SSSIntensity * tex2D( _SSSMap, appendResult33 ) * tex2D( _SSSMask, uv_SSSMask ).r );
+				float lerpResult187 = lerp( _EyeSmoothness , _PupilSmoothness , _EyeSoftVar177);
+				float _SmoothnessVar189 = lerpResult187;
 				
-				float2 uv_MaskMap = IN.ase_texcoord7.xy * _MaskMap_ST.xy + _MaskMap_ST.zw;
-				float4 tex2DNode13 = tex2D( _MaskMap, uv_MaskMap );
-				
-				float3 Albedo = _BaseVar55.rgb;
-				float3 Normal = unpack11;
-				float3 Emission = ( ( _BaseVar55 * _Brightness ) + _SSSVar52 ).rgb;
-				float3 Specular = ( _SpecColor * tex2DNode13 ).rgb;
+				float3 Albedo = ( _MatcapVar193 + ( _Brightness * lerpResult52 ) ).rgb;
+				float3 Normal = _NormalVar182;
+				float3 Emission = 0;
+				float3 Specular = temp_cast_4;
 				float Metallic = 0;
-				float Smoothness = ( tex2DNode13.a * _Smoothness );
+				float Smoothness = _SmoothnessVar189;
 				float Occlusion = 1;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
@@ -668,10 +688,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			AlphaToMask Off
 
 			HLSLPROGRAM
-			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_TS 1
 			#pragma multi_compile_instancing
-			#define _EMISSION
+			#define _SPECULAR_SETUP 1
 			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 999999
 
@@ -713,17 +732,19 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Color;
-			float4 _BaseMap_ST;
-			float4 _BumpMap_ST;
-			float4 _SSSMask_ST;
-			float4 _SpecColor;
-			float4 _MaskMap_ST;
+			float4 _MainTexW_ST;
+			float4 _PupilColor;
+			float _EyeSize;
 			float _BumpScale;
+			float _MatcapIntensity;
 			float _Brightness;
-			float _SSSIntensity;
-			float _SSS;
-			float _Smoothness;
+			float _PupilHeight;
+			float _PupilScale;
+			float _SizePupil;
+			float _PupilSoft;
+			float _Specular;
+			float _EyeSmoothness;
+			float _PupilSmoothness;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -941,10 +962,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			AlphaToMask Off
 
 			HLSLPROGRAM
-			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_TS 1
 			#pragma multi_compile_instancing
-			#define _EMISSION
+			#define _SPECULAR_SETUP 1
 			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 999999
 
@@ -986,17 +1006,19 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Color;
-			float4 _BaseMap_ST;
-			float4 _BumpMap_ST;
-			float4 _SSSMask_ST;
-			float4 _SpecColor;
-			float4 _MaskMap_ST;
+			float4 _MainTexW_ST;
+			float4 _PupilColor;
+			float _EyeSize;
 			float _BumpScale;
+			float _MatcapIntensity;
 			float _Brightness;
-			float _SSSIntensity;
-			float _SSS;
-			float _Smoothness;
+			float _PupilHeight;
+			float _PupilScale;
+			float _SizePupil;
+			float _PupilSoft;
+			float _Specular;
+			float _EyeSmoothness;
+			float _PupilSmoothness;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1201,10 +1223,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			ColorMask RGBA
 
 			HLSLPROGRAM
-			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_TS 1
 			#pragma multi_compile_instancing
-			#define _EMISSION
+			#define _SPECULAR_SETUP 1
 			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 999999
 
@@ -1222,7 +1243,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/UnityInstancing.hlsl"
 			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/ShaderGraphFunctions.hlsl"
 			
-			
+			#define ASE_NEEDS_VERT_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_POSITION
+
 
 			#pragma shader_feature _ _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
 
@@ -1231,6 +1254,7 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				float4 vertex : POSITION;
 				float3 ase_normal : NORMAL;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_tangent : TANGENT;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
 
@@ -1244,22 +1268,27 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				float4 shadowCoord : TEXCOORD1;
 				#endif
 				float4 ase_texcoord2 : TEXCOORD2;
+				float4 ase_texcoord3 : TEXCOORD3;
+				float4 ase_texcoord4 : TEXCOORD4;
+				float4 ase_texcoord5 : TEXCOORD5;
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Color;
-			float4 _BaseMap_ST;
-			float4 _BumpMap_ST;
-			float4 _SSSMask_ST;
-			float4 _SpecColor;
-			float4 _MaskMap_ST;
+			float4 _MainTexW_ST;
+			float4 _PupilColor;
+			float _EyeSize;
 			float _BumpScale;
+			float _MatcapIntensity;
 			float _Brightness;
-			float _SSSIntensity;
-			float _SSS;
-			float _Smoothness;
+			float _PupilHeight;
+			float _PupilScale;
+			float _SizePupil;
+			float _PupilSoft;
+			float _Specular;
+			float _EyeSmoothness;
+			float _PupilSmoothness;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1280,7 +1309,10 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			sampler2D _BaseMap;
+			sampler2D _MatCapMap;
+			sampler2D _BumpMap;
+			sampler2D _PupilMap;
+			sampler2D _MainTexW;
 
 
 			
@@ -1291,10 +1323,21 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				UNITY_TRANSFER_INSTANCE_ID( v, o );
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO( o );
 
+				float3 ase_worldTangent = TransformObjectToWorldDir(v.ase_tangent.xyz);
+				o.ase_texcoord3.xyz = ase_worldTangent;
+				float3 ase_worldNormal = TransformObjectToWorldNormal(v.ase_normal);
+				o.ase_texcoord4.xyz = ase_worldNormal;
+				float ase_vertexTangentSign = v.ase_tangent.w * unity_WorldTransformParams.w;
+				float3 ase_worldBitangent = cross( ase_worldNormal, ase_worldTangent ) * ase_vertexTangentSign;
+				o.ase_texcoord5.xyz = ase_worldBitangent;
+				
 				o.ase_texcoord2.xy = v.ase_texcoord.xy;
 				
 				//setting value to unused interpolator channels and avoid initialization warnings
 				o.ase_texcoord2.zw = 0;
+				o.ase_texcoord3.w = 0;
+				o.ase_texcoord4.w = 0;
+				o.ase_texcoord5.w = 0;
 				
 				#ifdef ASE_ABSOLUTE_VERTEX_POS
 					float3 defaultVertexValue = v.vertex.xyz;
@@ -1334,6 +1377,7 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				float4 vertex : INTERNALTESSPOS;
 				float3 ase_normal : NORMAL;
 				float4 ase_texcoord : TEXCOORD0;
+				float4 ase_tangent : TANGENT;
 
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 			};
@@ -1352,6 +1396,7 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				o.vertex = v.vertex;
 				o.ase_normal = v.ase_normal;
 				o.ase_texcoord = v.ase_texcoord;
+				o.ase_tangent = v.ase_tangent;
 				return o;
 			}
 
@@ -1391,6 +1436,7 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				o.vertex = patch[0].vertex * bary.x + patch[1].vertex * bary.y + patch[2].vertex * bary.z;
 				o.ase_normal = patch[0].ase_normal * bary.x + patch[1].ase_normal * bary.y + patch[2].ase_normal * bary.z;
 				o.ase_texcoord = patch[0].ase_texcoord * bary.x + patch[1].ase_texcoord * bary.y + patch[2].ase_texcoord * bary.z;
+				o.ase_tangent = patch[0].ase_tangent * bary.x + patch[1].ase_tangent * bary.y + patch[2].ase_tangent * bary.z;
 				#if defined(ASE_PHONG_TESSELLATION)
 				float3 pp[3];
 				for (int i = 0; i < 3; ++i)
@@ -1426,11 +1472,38 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 					#endif
 				#endif
 
-				float2 uv_BaseMap = IN.ase_texcoord2.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
-				float4 _BaseVar55 = ( _Color * tex2D( _BaseMap, uv_BaseMap ) );
+				float _EyeSize53 = _EyeSize;
+				float2 texCoord104 = IN.ase_texcoord2.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 _PupilUVVar112 = ( ( _EyeSize53 * ( texCoord104 + float2( -0.5,-0.5 ) ) ) + float2( 0.5,0.5 ) );
+				float3 unpack111 = UnpackNormalScale( tex2D( _BumpMap, _PupilUVVar112 ), _BumpScale );
+				unpack111.z = lerp( 1, unpack111.z, saturate(_BumpScale) );
+				float3 _NormalVar182 = unpack111;
+				float3 ase_worldTangent = IN.ase_texcoord3.xyz;
+				float3 ase_worldNormal = IN.ase_texcoord4.xyz;
+				float3 ase_worldBitangent = IN.ase_texcoord5.xyz;
+				float3 tanToWorld0 = float3( ase_worldTangent.x, ase_worldBitangent.x, ase_worldNormal.x );
+				float3 tanToWorld1 = float3( ase_worldTangent.y, ase_worldBitangent.y, ase_worldNormal.y );
+				float3 tanToWorld2 = float3( ase_worldTangent.z, ase_worldBitangent.z, ase_worldNormal.z );
+				float3 tanNormal146 = _NormalVar182;
+				float3 worldNormal146 = normalize( float3(dot(tanToWorld0,tanNormal146), dot(tanToWorld1,tanNormal146), dot(tanToWorld2,tanNormal146)) );
+				float4 tex2DNode1 = tex2D( _PupilMap, _PupilUVVar112 );
+				float _EyeEdge140 = tex2DNode1.a;
+				float4 _MatcapVar193 = ( tex2D( _MatCapMap, ( float3( 0.5,0.5,0.5 ) + ( mul( UNITY_MATRIX_V, float4( worldNormal146 , 0.0 ) ).xyz * float3( 0.5,0.5,0.5 ) ) ).xy ) * _MatcapIntensity * _EyeEdge140 );
+				float2 uv_MainTexW = IN.ase_texcoord2.xy * _MainTexW_ST.xy + _MainTexW_ST.zw;
+				float3 ase_worldViewDir = ( _WorldSpaceCameraPos.xyz - WorldPosition );
+				ase_worldViewDir = normalize(ase_worldViewDir);
+				float3 ase_tanViewDir =  tanToWorld0 * ase_worldViewDir.x + tanToWorld1 * ase_worldViewDir.y  + tanToWorld2 * ase_worldViewDir.z;
+				ase_tanViewDir = SafeNormalize( ase_tanViewDir );
+				float2 Offset95 = ( ( _PupilHeight - 1 ) * ase_tanViewDir.xy * ( _PupilScale * tex2DNode1.a ) ) + _PupilUVVar112;
+				float2 _ParallaxUVVar129 = Offset95;
+				float2 normalizeResult10 = normalize( ( float2( 0.5,0.5 ) * ( _ParallaxUVVar129 + float2( -0.5,-0.5 ) ) ) );
+				float2 lerpResult26 = lerp( _ParallaxUVVar129 , ( normalizeResult10 + float2( 0.5,0.5 ) ) , ( ( 0.8 / _EyeSize53 ) * _SizePupil ));
+				float4 _PupilVar197 = ( tex2D( _PupilMap, lerpResult26 ) * _PupilColor );
+				float _EyeSoftVar177 = saturate( (0.0 + (_EyeEdge140 - 0.0) * (1.0 - 0.0) / (_PupilSoft - 0.0)) );
+				float4 lerpResult52 = lerp( tex2D( _MainTexW, uv_MainTexW ) , _PupilVar197 , _EyeSoftVar177);
 				
 				
-				float3 Albedo = _BaseVar55.rgb;
+				float3 Albedo = ( _MatcapVar193 + ( _Brightness * lerpResult52 ) ).rgb;
 				float Alpha = 1;
 				float AlphaClipThreshold = 0.5;
 
@@ -1458,10 +1531,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
             ZWrite On
 
 			HLSLPROGRAM
-			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_TS 1
 			#pragma multi_compile_instancing
-			#define _EMISSION
+			#define _SPECULAR_SETUP 1
 			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 999999
 
@@ -1504,17 +1576,19 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Color;
-			float4 _BaseMap_ST;
-			float4 _BumpMap_ST;
-			float4 _SSSMask_ST;
-			float4 _SpecColor;
-			float4 _MaskMap_ST;
+			float4 _MainTexW_ST;
+			float4 _PupilColor;
+			float _EyeSize;
 			float _BumpScale;
+			float _MatcapIntensity;
 			float _Brightness;
-			float _SSSIntensity;
-			float _SSS;
-			float _Smoothness;
+			float _PupilHeight;
+			float _PupilScale;
+			float _SizePupil;
+			float _PupilSoft;
+			float _Specular;
+			float _EyeSmoothness;
+			float _PupilSmoothness;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1724,10 +1798,9 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			
 
 			HLSLPROGRAM
-			#define _SPECULAR_SETUP 1
 			#define _NORMAL_DROPOFF_TS 1
 			#pragma multi_compile_instancing
-			#define _EMISSION
+			#define _SPECULAR_SETUP 1
 			#define _NORMALMAP 1
 			#define ASE_SRP_VERSION 999999
 
@@ -1765,8 +1838,10 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			    #define ENABLE_TERRAIN_PERPIXEL_NORMAL
 			#endif
 
-			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
+			#define ASE_NEEDS_FRAG_WORLD_TANGENT
 			#define ASE_NEEDS_FRAG_WORLD_NORMAL
+			#define ASE_NEEDS_FRAG_WORLD_BITANGENT
+			#define ASE_NEEDS_FRAG_WORLD_VIEW_DIR
 
 
 			struct VertexInput
@@ -1800,17 +1875,19 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 			};
 
 			CBUFFER_START(UnityPerMaterial)
-			float4 _Color;
-			float4 _BaseMap_ST;
-			float4 _BumpMap_ST;
-			float4 _SSSMask_ST;
-			float4 _SpecColor;
-			float4 _MaskMap_ST;
+			float4 _MainTexW_ST;
+			float4 _PupilColor;
+			float _EyeSize;
 			float _BumpScale;
+			float _MatcapIntensity;
 			float _Brightness;
-			float _SSSIntensity;
-			float _SSS;
-			float _Smoothness;
+			float _PupilHeight;
+			float _PupilScale;
+			float _SizePupil;
+			float _PupilSoft;
+			float _Specular;
+			float _EyeSmoothness;
+			float _PupilSmoothness;
 			#ifdef _TRANSMISSION_ASE
 				float _TransmissionShadow;
 			#endif
@@ -1831,9 +1908,10 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 				float _TessMaxDisp;
 			#endif
 			CBUFFER_END
-			sampler2D _BaseMap;
-			sampler2D _SSSMap;
-			sampler2D _SSSMask;
+			sampler2D _MatCapMap;
+			sampler2D _BumpMap;
+			sampler2D _PupilMap;
+			sampler2D _MainTexW;
 
 
 			
@@ -2032,18 +2110,34 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 	
 				WorldViewDirection = SafeNormalize( WorldViewDirection );
 
-				float2 uv_BaseMap = IN.ase_texcoord7.xy * _BaseMap_ST.xy + _BaseMap_ST.zw;
-				float4 _BaseVar55 = ( _Color * tex2D( _BaseMap, uv_BaseMap ) );
+				float _EyeSize53 = _EyeSize;
+				float2 texCoord104 = IN.ase_texcoord7.xy * float2( 1,1 ) + float2( 0,0 );
+				float2 _PupilUVVar112 = ( ( _EyeSize53 * ( texCoord104 + float2( -0.5,-0.5 ) ) ) + float2( 0.5,0.5 ) );
+				float3 unpack111 = UnpackNormalScale( tex2D( _BumpMap, _PupilUVVar112 ), _BumpScale );
+				unpack111.z = lerp( 1, unpack111.z, saturate(_BumpScale) );
+				float3 _NormalVar182 = unpack111;
+				float3 tanToWorld0 = float3( WorldTangent.x, WorldBiTangent.x, WorldNormal.x );
+				float3 tanToWorld1 = float3( WorldTangent.y, WorldBiTangent.y, WorldNormal.y );
+				float3 tanToWorld2 = float3( WorldTangent.z, WorldBiTangent.z, WorldNormal.z );
+				float3 tanNormal146 = _NormalVar182;
+				float3 worldNormal146 = normalize( float3(dot(tanToWorld0,tanNormal146), dot(tanToWorld1,tanNormal146), dot(tanToWorld2,tanNormal146)) );
+				float4 tex2DNode1 = tex2D( _PupilMap, _PupilUVVar112 );
+				float _EyeEdge140 = tex2DNode1.a;
+				float4 _MatcapVar193 = ( tex2D( _MatCapMap, ( float3( 0.5,0.5,0.5 ) + ( mul( UNITY_MATRIX_V, float4( worldNormal146 , 0.0 ) ).xyz * float3( 0.5,0.5,0.5 ) ) ).xy ) * _MatcapIntensity * _EyeEdge140 );
+				float2 uv_MainTexW = IN.ase_texcoord7.xy * _MainTexW_ST.xy + _MainTexW_ST.zw;
+				float3 ase_tanViewDir =  tanToWorld0 * WorldViewDirection.x + tanToWorld1 * WorldViewDirection.y  + tanToWorld2 * WorldViewDirection.z;
+				ase_tanViewDir = SafeNormalize( ase_tanViewDir );
+				float2 Offset95 = ( ( _PupilHeight - 1 ) * ase_tanViewDir.xy * ( _PupilScale * tex2DNode1.a ) ) + _PupilUVVar112;
+				float2 _ParallaxUVVar129 = Offset95;
+				float2 normalizeResult10 = normalize( ( float2( 0.5,0.5 ) * ( _ParallaxUVVar129 + float2( -0.5,-0.5 ) ) ) );
+				float2 lerpResult26 = lerp( _ParallaxUVVar129 , ( normalizeResult10 + float2( 0.5,0.5 ) ) , ( ( 0.8 / _EyeSize53 ) * _SizePupil ));
+				float4 _PupilVar197 = ( tex2D( _PupilMap, lerpResult26 ) * _PupilColor );
+				float _EyeSoftVar177 = saturate( (0.0 + (_EyeEdge140 - 0.0) * (1.0 - 0.0) / (_PupilSoft - 0.0)) );
+				float4 lerpResult52 = lerp( tex2D( _MainTexW, uv_MainTexW ) , _PupilVar197 , _EyeSoftVar177);
 				
-				float3 normalizeResult49 = normalize( WorldViewDirection );
-				float dotResult26 = dot( normalizeResult49 , WorldNormal );
-				float2 appendResult33 = (float2(( 1.0 - ( 0.5 + ( dotResult26 * 0.5 ) ) ) , _SSS));
-				float2 uv_SSSMask = IN.ase_texcoord7.xy * _SSSMask_ST.xy + _SSSMask_ST.zw;
-				float4 _SSSVar52 = ( _SSSIntensity * tex2D( _SSSMap, appendResult33 ) * tex2D( _SSSMask, uv_SSSMask ).r );
-				
-				float3 Albedo = _BaseVar55.rgb;
+				float3 Albedo = ( _MatcapVar193 + ( _Brightness * lerpResult52 ) ).rgb;
 				float3 Normal = float3(0, 0, 1);
-				float3 Emission = ( ( _BaseVar55 * _Brightness ) + _SSSVar52 ).rgb;
+				float3 Emission = 0;
 				float3 Specular = 0.5;
 				float Metallic = 0;
 				float Smoothness = 0.5;
@@ -2203,77 +2297,152 @@ Shader "VG/ASE/Role/Skin_S2_SD2"
 }
 /*ASEBEGIN
 Version=18900
-558;536;1361;463;4962.752;1148.123;4.31953;True;True
-Node;AmplifyShaderEditor.CommentaryNode;58;-3358.44,140.8261;Inherit;False;1776.235;567.7219;;14;41;50;49;26;30;31;34;40;33;45;35;44;43;52;SSS;1,1,1,1;0;0
-Node;AmplifyShaderEditor.ViewDirInputsCoordNode;41;-3308.44,269.7188;Inherit;False;World;False;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.WorldNormalVector;50;-3157.1,365.7613;Inherit;False;False;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
-Node;AmplifyShaderEditor.NormalizeNode;49;-3119.901,274.8615;Inherit;False;False;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
-Node;AmplifyShaderEditor.DotProductOpNode;26;-2958.512,311.8492;Inherit;False;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;30;-2841.955,350.5676;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0.5;False;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;31;-2713.955,278.5677;Inherit;False;2;2;0;FLOAT;0.5;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.CommentaryNode;60;-3356.266,-527.777;Inherit;False;741.8354;451.0002;;4;9;8;10;55;基础;1,1,1,1;0;0
-Node;AmplifyShaderEditor.RangedFloatNode;34;-2711.997,367.1429;Inherit;False;Property;_SSS;SSS;9;0;Create;True;0;0;0;False;0;False;1;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.OneMinusNode;40;-2591.003,278.1669;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.DynamicAppendNode;33;-2428.997,313.1429;Inherit;False;FLOAT2;4;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT;0;False;1;FLOAT2;0
-Node;AmplifyShaderEditor.SamplerNode;9;-3306.266,-306.7763;Inherit;True;Property;_BaseMap;基础图;2;0;Create;False;0;0;0;False;0;False;-1;None;d3192bdad86c3514fac518d27926638b;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;8;-3216.266,-477.7766;Inherit;False;Property;_Color;颜色;0;0;Create;False;0;0;0;False;0;False;1,1,1,1;0.06452473,0.2210947,0.4716981,1;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SamplerNode;35;-2293.997,284.1429;Inherit;True;Property;_SSSMap;SSSMap;8;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;44;-2273.53,190.8261;Inherit;False;Property;_SSSIntensity;SSS强度;10;0;Create;False;0;0;0;False;0;False;1;0;0;5;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;45;-2293.642,478.548;Inherit;True;Property;_SSSMask;SSS遮罩图;11;0;Create;False;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;10;-2991.265,-377.7766;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;43;-1960.906,264.2597;Inherit;False;3;3;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;55;-2838.43,-382.5691;Inherit;False;_BaseVar;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.GetLocalVarNode;56;-919.9677,-115.7838;Inherit;False;55;_BaseVar;1;0;OBJECT;;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;20;-890.7322,-38.20653;Inherit;False;Property;_Brightness;补光;1;0;Create;False;0;0;0;False;0;False;0;0;0;0;0;1;FLOAT;0
-Node;AmplifyShaderEditor.RegisterLocalVarNode;52;-1806.205,257.2726;Inherit;False;_SSSVar;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.GetLocalVarNode;53;-769.3976,35.46097;Inherit;False;52;_SSSVar;1;0;OBJECT;;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;19;-739.9324,-81.00652;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;15;-753.8981,588.6071;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
-Node;AmplifyShaderEditor.GetLocalVarNode;57;-597.5526,-143.6587;Inherit;False;55;_BaseVar;1;0;OBJECT;;False;1;COLOR;0
-Node;AmplifyShaderEditor.SimpleMultiplyOpNode;17;-754.0812,353.2968;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.SamplerNode;13;-1099.899,458.1064;Inherit;True;Property;_MaskMap;遮罩图（RGB高光A平滑度）;5;0;Create;False;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.RangedFloatNode;12;-1018.337,176.0269;Inherit;False;Property;_BumpScale;法线强度;4;0;Create;False;0;0;0;False;0;False;1;1;-2;2;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SimpleAddOpNode;51;-555.8906,-19.07408;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
-Node;AmplifyShaderEditor.RangedFloatNode;16;-1078.199,648.3071;Inherit;False;Property;_Smoothness;平滑度;7;0;Create;False;0;0;0;False;0;False;0.5;0;0;1;0;1;FLOAT;0
-Node;AmplifyShaderEditor.SamplerNode;11;-745.3373,129.0269;Inherit;True;Property;_BumpMap;法线图;3;0;Create;False;0;0;0;False;0;False;-1;None;4e1b61cfcf90dcf4a8bc01865d332202;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.ColorNode;22;-1021.385,279.6724;Inherit;False;Property;_SpecColor;高光颜色;6;0;Create;False;0;0;0;False;0;False;1,1,1,1;0,0,0,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;5;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;1;0,0;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;VG/ASE/Role/Skin_S2_SD2;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;0;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;1;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;0;Built-in Fog;0;_FinalColorxAlpha;0;Meta Pass;0;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;False;True;True;True;False;;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;7;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;2;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;0;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;4;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;3;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;6;0,0;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
-WireConnection;49;0;41;0
-WireConnection;26;0;49;0
-WireConnection;26;1;50;0
-WireConnection;30;0;26;0
-WireConnection;31;1;30;0
-WireConnection;40;0;31;0
-WireConnection;33;0;40;0
-WireConnection;33;1;34;0
-WireConnection;35;1;33;0
+583;479;1336;520;-5535.679;625.2048;1.077337;True;True
+Node;AmplifyShaderEditor.CommentaryNode;176;-1591.466,-1154.77;Inherit;False;913.5062;334.5477;;6;104;126;171;108;109;112;瞳孔UV;1,1,1,1;0;0
+Node;AmplifyShaderEditor.RangedFloatNode;48;-1394.594,-1458.843;Inherit;False;Property;_EyeSize;眼珠大小;11;0;Create;False;0;0;0;False;0;False;2;2.144;2;3.5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;53;-1123.215,-1458.861;Inherit;False;_EyeSize;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TextureCoordinatesNode;104;-1541.466,-1017.45;Inherit;False;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;171;-1322.821,-955.2218;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;-0.5,-0.5;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;126;-1367.696,-1104.77;Inherit;False;53;_EyeSize;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;108;-1170.045,-1035.753;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;109;-1026.278,-975.1207;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;0.5,0.5;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;112;-901.9599,-979.4169;Inherit;False;_PupilUVVar;-1;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.CommentaryNode;138;-1596.56,-637.8898;Inherit;False;1158.991;603.5362;;10;113;96;140;101;1;97;172;99;129;95;视差UV;1,1,1,1;0;0
+Node;AmplifyShaderEditor.GetLocalVarNode;172;-1588.26,-200.554;Inherit;False;112;_PupilUVVar;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RangedFloatNode;97;-1388.363,-298.7674;Inherit;False;Property;_PupilScale;瞳孔视差强度;15;0;Create;False;0;0;0;False;0;False;0.4;0.4;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;1;-1411.931,-223.5745;Inherit;True;Property;_PupilMap;瞳孔贴图(RGB颜色A瞳孔遮罩);2;0;Create;False;0;0;0;False;0;False;-1;None;ff81a3b921c254344b85e904bab3747e;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.RangedFloatNode;99;-1256.112,-520.7679;Inherit;False;Property;_PupilHeight;瞳孔视差高度;14;0;Create;False;0;0;0;False;0;False;0.27;0.36;0;3;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;101;-1095.908,-220.5019;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;113;-1166.371,-597.1525;Inherit;False;112;_PupilUVVar;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.ViewDirInputsCoordNode;96;-1161.812,-445.5354;Inherit;False;Tangent;True;0;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.ParallaxMappingNode;95;-906.0109,-543.4048;Inherit;True;Normal;4;0;FLOAT2;0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;3;FLOAT3;0,0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.CommentaryNode;186;-590.8323,-1586.734;Inherit;False;846.9998;284.2661;;4;114;111;182;181;瞳孔法线;1,1,1,1;0;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;129;-620.1224,-543.3221;Inherit;False;_ParallaxUVVar;-1;True;1;0;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;173;2476.388,-743.2808;Inherit;False;129;_ParallaxUVVar;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;114;-453.7307,-1536.734;Inherit;False;112;_PupilUVVar;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.RangedFloatNode;181;-540.8323,-1459.188;Inherit;False;Property;_BumpScale;法线强度;5;0;Create;False;0;0;0;False;0;False;1;1;-2;2;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;111;-259.344,-1532.468;Inherit;True;Property;_BumpMap;法线图;4;0;Create;False;0;0;0;False;0;False;-1;None;92c72a8c9837e9f40bcb7ef7c2ca6947;True;0;True;bump;Auto;True;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1.2;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleAddOpNode;174;2671.672,-696.0941;Inherit;False;2;2;0;FLOAT2;0,0;False;1;FLOAT2;-0.5,-0.5;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.CommentaryNode;195;-321.0456,-549.8174;Inherit;False;1431.277;401.5268;;11;193;192;196;151;157;150;148;147;145;146;184;Matcap;1,1,1,1;0;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;182;32.16719,-1532.188;Inherit;False;_NormalVar;-1;True;1;0;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;8;2798.928,-761.9341;Inherit;False;2;2;0;FLOAT2;0.5,0.5;False;1;FLOAT2;0.5,0.5;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;54;2771.296,-528.514;Inherit;False;53;_EyeSize;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;49;2793.125,-607.7098;Inherit;False;Constant;_Float2;Float 2;5;0;Create;True;0;0;0;False;0;False;0.8;0;0;0;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleDivideOpNode;50;2949.221,-573.7148;Inherit;False;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.NormalizeNode;10;2930.33,-761.6099;Inherit;False;False;1;0;FLOAT2;0,0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;184;-308.0456,-397.7682;Inherit;False;182;_NormalVar;1;0;OBJECT;;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RangedFloatNode;37;2803.964,-453.4674;Inherit;False;Property;_SizePupil;瞳孔大小;12;0;Create;False;0;0;0;False;0;False;0;-0.123;-0.5;0.5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.WorldNormalVector;146;-135.9914,-393.5504;Inherit;False;True;1;0;FLOAT3;0,0,1;False;4;FLOAT3;0;FLOAT;1;FLOAT;2;FLOAT;3
+Node;AmplifyShaderEditor.ViewMatrixNode;145;-65.00777,-467.0734;Inherit;False;0;1;FLOAT4x4;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;140;-1101.815,-128.4743;Inherit;False;_EyeEdge;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.CommentaryNode;142;-571.2507,-1080.636;Inherit;False;800.0015;253.3605;;5;141;61;177;64;60;瞳孔柔和度;1,1,1,1;0;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;18;3082.022,-727.837;Inherit;False;2;2;0;FLOAT2;0.5,0.5;False;1;FLOAT2;0.5,0.5;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;51;3097.129,-526.7853;Inherit;False;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;135;3008.019,-841.1879;Inherit;False;129;_ParallaxUVVar;1;0;OBJECT;;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.GetLocalVarNode;141;-458.2869,-1032.468;Inherit;False;140;_EyeEdge;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;61;-558.9238,-948.3787;Inherit;False;Property;_PupilSoft;瞳孔柔和度;13;0;Create;False;0;0;0;False;0;False;0.1058824;0.1;0;0.3;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;26;3258.374,-751.6555;Inherit;False;3;0;FLOAT2;0,0;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;1;FLOAT2;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;147;59.00545,-445.4333;Inherit;False;2;2;0;FLOAT4x4;0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1;False;1;FLOAT3;0,0,0;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;148;193.7784,-409.4334;Inherit;False;2;2;0;FLOAT3;0,0,0;False;1;FLOAT3;0.5,0.5,0.5;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SamplerNode;98;3413.093,-780.8211;Inherit;True;Property;_TextureSample0;Texture Sample 0;2;0;Create;True;0;0;0;False;0;False;-1;None;None;True;0;False;white;Auto;False;Instance;1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.ColorNode;94;3500.665,-589.097;Inherit;False;Property;_PupilColor;瞳孔颜色;1;0;Create;False;0;0;0;False;0;False;1,1,1,1;0.4038357,0.5556915,0.7075471,0;True;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.TFHCRemapNode;60;-268.6604,-1003.899;Inherit;False;5;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;1;False;3;FLOAT;0;False;4;FLOAT;1;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;150;322.8071,-470.6874;Inherit;False;2;2;0;FLOAT3;0.5,0.5,0.5;False;1;FLOAT3;0.5,0.5,0.5;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;92;3741.133,-676.15;Inherit;False;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.SaturateNode;64;-96.02325,-1003.078;Inherit;False;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;197;3874.495,-680.3455;Inherit;False;_PupilVar;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;177;40.71066,-1007.47;Inherit;False;_EyeSoftVar;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;157;463.9981,-304.6475;Inherit;False;Property;_MatcapIntensity;Matcap强度;7;0;Create;False;0;0;0;False;0;False;2;0.58;0;5;0;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;151;444.9581,-499.8174;Inherit;True;Property;_MatCapMap;MatCap贴图;6;0;Create;False;0;0;0;False;0;False;-1;None;1f530e5d17450024595cf04e38f848e0;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.GetLocalVarNode;196;568.8514,-229.1539;Inherit;False;140;_EyeEdge;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SamplerNode;47;5321.983,-833.7407;Inherit;True;Property;_MainTexW;眼白;3;0;Create;False;0;0;0;False;0;False;-1;None;17e051425cac7a1458fa8f252f3a5268;True;0;False;white;Auto;False;Object;-1;Auto;Texture2D;8;0;SAMPLER2D;;False;1;FLOAT2;0,0;False;2;FLOAT;0;False;3;FLOAT2;0,0;False;4;FLOAT2;0,0;False;5;FLOAT;1;False;6;FLOAT;0;False;7;SAMPLERSTATE;;False;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;192;771.9805,-324.9955;Inherit;False;3;3;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.GetLocalVarNode;179;5433.291,-556.7535;Inherit;False;177;_EyeSoftVar;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;199;5447.449,-638.8524;Inherit;False;197;_PupilVar;1;0;OBJECT;;False;1;COLOR;0
+Node;AmplifyShaderEditor.RangedFloatNode;201;5654.476,-745.6141;Inherit;False;Property;_Brightness;眼球亮度;0;0;Create;False;0;0;0;False;0;False;1;1.5;0;3;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;52;5672.76,-657.9957;Inherit;True;3;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;2;FLOAT;0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;193;916.5586,-329.62;Inherit;False;_MatcapVar;-1;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.CommentaryNode;191;398.3322,-1112.472;Inherit;False;744.3245;341.988;;5;178;118;89;187;189;平滑度;1,1,1,1;0;0
+Node;AmplifyShaderEditor.SimpleMultiplyOpNode;200;5950.765,-681.8091;Inherit;False;2;2;0;FLOAT;0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.GetLocalVarNode;194;5924.799,-781.1617;Inherit;False;193;_MatcapVar;1;0;OBJECT;;False;1;COLOR;0
+Node;AmplifyShaderEditor.GetLocalVarNode;183;6179.412,-454.6274;Inherit;False;182;_NormalVar;1;0;OBJECT;;False;1;FLOAT3;0
+Node;AmplifyShaderEditor.RegisterLocalVarNode;189;907.6566,-990.6318;Inherit;False;_SmoothnessVar;-1;True;1;0;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;89;448.3322,-966.7562;Inherit;False;Property;_PupilSmoothness;瞳孔平滑度;9;0;Create;False;0;0;0;False;0;False;1;0.679;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;178;539.5831,-886.484;Inherit;False;177;_EyeSoftVar;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.RangedFloatNode;90;5862.867,-433.3685;Inherit;False;Property;_Specular;高光;8;0;Create;False;0;0;0;False;0;False;0;0;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.GetLocalVarNode;190;5878.543,-353.9154;Inherit;False;189;_SmoothnessVar;1;0;OBJECT;;False;1;FLOAT;0
+Node;AmplifyShaderEditor.SimpleAddOpNode;154;6133.576,-739.8278;Inherit;True;2;2;0;COLOR;0,0,0,0;False;1;COLOR;0,0,0,0;False;1;COLOR;0
+Node;AmplifyShaderEditor.RangedFloatNode;118;449.3243,-1062.472;Inherit;False;Property;_EyeSmoothness;眼白平滑度;10;0;Create;False;0;0;0;False;0;False;1;0.583;0;1;0;1;FLOAT;0
+Node;AmplifyShaderEditor.LerpOp;187;750.436,-985.6497;Inherit;False;3;0;FLOAT;0;False;1;FLOAT;0;False;2;FLOAT;0;False;1;FLOAT;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;169;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthNormals;0;6;DepthNormals;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=DepthNormals;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;165;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ShadowCaster;0;2;ShadowCaster;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;False;True;1;LightMode=ShadowCaster;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;163;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;ExtraPrePass;0;0;ExtraPrePass;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;0;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;0;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;168;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Universal2D;0;5;Universal2D;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=Universal2D;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;166;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;DepthOnly;0;3;DepthOnly;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;False;False;True;False;False;False;False;0;False;-1;False;False;False;False;False;False;False;False;False;True;1;False;-1;False;False;True;1;LightMode=DepthOnly;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;170;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;GBuffer;0;7;GBuffer;5;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalGBuffer;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;167;6379.69,-473.035;Float;False;False;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;New Amplify Shader;94348b07e5e8bab40bd6c8a1e3df54cd;True;Meta;0;4;Meta;0;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;2;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;1;LightMode=Meta;False;0;Hidden/InternalErrorShader;0;0;Standard;0;False;0
+Node;AmplifyShaderEditor.TemplateMultiPassMasterNode;164;6379.69,-473.035;Float;False;True;-1;2;UnityEditor.ShaderGraph.PBRMasterGUI;0;2;VG/ASE/Role/Eye;94348b07e5e8bab40bd6c8a1e3df54cd;True;Forward;0;1;Forward;18;False;False;False;False;False;False;False;False;False;False;False;False;True;0;False;-1;False;True;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;3;RenderPipeline=UniversalPipeline;RenderType=Opaque=RenderType;Queue=Geometry=Queue=0;True;0;0;False;True;1;1;False;-1;0;False;-1;1;1;False;-1;0;False;-1;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;True;True;True;True;0;False;-1;False;False;False;False;False;False;False;True;False;255;False;-1;255;False;-1;255;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;7;False;-1;1;False;-1;1;False;-1;1;False;-1;False;True;1;False;-1;True;3;False;-1;True;True;0;False;-1;0;False;-1;True;1;LightMode=UniversalForward;False;0;Hidden/InternalErrorShader;0;0;Standard;38;Workflow;0;Surface;0;  Refraction Model;0;  Blend;0;Two Sided;1;Fragment Normal Space,InvertActionOnDeselection;0;Transmission;0;  Transmission Shadow;0.5,False,-1;Translucency;0;  Translucency Strength;1,False,-1;  Normal Distortion;0.5,False,-1;  Scattering;2,False,-1;  Direct;0.9,False,-1;  Ambient;0.1,False,-1;  Shadow;0.5,False,-1;Cast Shadows;1;  Use Shadow Threshold;0;Receive Shadows;1;GPU Instancing;1;LOD CrossFade;0;Built-in Fog;0;_FinalColorxAlpha;0;Meta Pass;0;Override Baked GI;0;Extra Pre Pass;0;DOTS Instancing;0;Tessellation;0;  Phong;0;  Strength;0.5,False,-1;  Type;0;  Tess;16,False,-1;  Min;10,False,-1;  Max;25,False,-1;  Edge Length;16,False,-1;  Max Displacement;25,False,-1;Write Depth;0;  Early Z;0;Vertex Position,InvertActionOnDeselection;1;0;8;False;True;True;True;False;True;True;True;False;;False;0
+WireConnection;53;0;48;0
+WireConnection;171;0;104;0
+WireConnection;108;0;126;0
+WireConnection;108;1;171;0
+WireConnection;109;0;108;0
+WireConnection;112;0;109;0
+WireConnection;1;1;172;0
+WireConnection;101;0;97;0
+WireConnection;101;1;1;4
+WireConnection;95;0;113;0
+WireConnection;95;1;99;0
+WireConnection;95;2;101;0
+WireConnection;95;3;96;0
+WireConnection;129;0;95;0
+WireConnection;111;1;114;0
+WireConnection;111;5;181;0
+WireConnection;174;0;173;0
+WireConnection;182;0;111;0
+WireConnection;8;1;174;0
+WireConnection;50;0;49;0
+WireConnection;50;1;54;0
 WireConnection;10;0;8;0
-WireConnection;10;1;9;0
-WireConnection;43;0;44;0
-WireConnection;43;1;35;0
-WireConnection;43;2;45;1
-WireConnection;55;0;10;0
-WireConnection;52;0;43;0
-WireConnection;19;0;56;0
-WireConnection;19;1;20;0
-WireConnection;15;0;13;4
-WireConnection;15;1;16;0
-WireConnection;17;0;22;0
-WireConnection;17;1;13;0
-WireConnection;51;0;19;0
-WireConnection;51;1;53;0
-WireConnection;11;5;12;0
-WireConnection;1;0;57;0
-WireConnection;1;1;11;0
-WireConnection;1;2;51;0
-WireConnection;1;9;17;0
-WireConnection;1;4;15;0
+WireConnection;146;0;184;0
+WireConnection;140;0;1;4
+WireConnection;18;0;10;0
+WireConnection;51;0;50;0
+WireConnection;51;1;37;0
+WireConnection;26;0;135;0
+WireConnection;26;1;18;0
+WireConnection;26;2;51;0
+WireConnection;147;0;145;0
+WireConnection;147;1;146;0
+WireConnection;148;0;147;0
+WireConnection;98;1;26;0
+WireConnection;60;0;141;0
+WireConnection;60;2;61;0
+WireConnection;150;1;148;0
+WireConnection;92;0;98;0
+WireConnection;92;1;94;0
+WireConnection;64;0;60;0
+WireConnection;197;0;92;0
+WireConnection;177;0;64;0
+WireConnection;151;1;150;0
+WireConnection;192;0;151;0
+WireConnection;192;1;157;0
+WireConnection;192;2;196;0
+WireConnection;52;0;47;0
+WireConnection;52;1;199;0
+WireConnection;52;2;179;0
+WireConnection;193;0;192;0
+WireConnection;200;0;201;0
+WireConnection;200;1;52;0
+WireConnection;189;0;187;0
+WireConnection;154;0;194;0
+WireConnection;154;1;200;0
+WireConnection;187;0;118;0
+WireConnection;187;1;89;0
+WireConnection;187;2;178;0
+WireConnection;164;0;154;0
+WireConnection;164;1;183;0
+WireConnection;164;9;90;0
+WireConnection;164;4;190;0
 ASEEND*/
-//CHKSM=913B8C926434909A7B9298228373CDCEBEE2B823
+//CHKSM=39C731D0B43446F3E31931183E511B8A7BF520D4

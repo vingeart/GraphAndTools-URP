@@ -126,14 +126,14 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EnvironmentReflections: 1
-    - _EyeSize: 2.144
-    - _EyeSmoothness: 1
+    - _EyeSize: 3.006
+    - _EyeSmoothness: 0.583
     - _Float0: 0
     - _Float4: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _MatcapIntensity: 0.58
+    - _MatcapIntensity: 0
     - _MatcapLighting: 2
     - _Metallic: 0
     - _Mode: 0
@@ -142,17 +142,18 @@ Material:
     - _PuilDepthScale: 0.4
     - _PuilHeight: 0.27
     - _PuilSoft: 0.221
-    - _PupilHeight: 0.36
-    - _PupilScale: 0.4
-    - _PupilSmoothness: 0.8
+    - _PupilHeight: 0.03
+    - _PupilScale: 0.5
+    - _PupilSmoothness: 0.679
     - _PupilSoft: 0.1
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _SizeEyes: 2.971
-    - _SizePupil: -0.123
+    - _SizePupil: -0.207
     - _Smooth: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _Specular: 0.068
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
@@ -166,6 +167,6 @@ Material:
     - _Color0: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EyesColor: {r: 0.4292453, g: 0.6543317, b: 1, a: 0}
-    - _PupilColor: {r: 0.4038359, g: 0.55569154, b: 0.7075472, a: 0}
+    - _PupilColor: {r: 0.40383574, g: 0.55569154, b: 0.7075471, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

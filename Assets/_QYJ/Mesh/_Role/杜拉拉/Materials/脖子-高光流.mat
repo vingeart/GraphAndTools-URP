@@ -8,8 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: "\u8116\u5B50-\u9AD8\u5149\u6D41"
-  m_Shader: {fileID: -6465566751694194690, guid: 8308796cb0402944cbf5e91770884033,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 27bb16f9af593dd4e8e63bdd63d44b4d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -76,6 +75,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: c5ebfe14558206b479ab297581ed1b28, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SSSMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -85,6 +88,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Specular1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -102,6 +109,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaCutoff: 0.5
     - _Blend: 0
     - _Brightness: 0.5
     - _BumpScale: 1
@@ -118,7 +126,7 @@ Material:
     - _GlossyReflections: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
-    - _PBRIntensity: 0.8
+    - _PBRIntensity: 0.5
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1

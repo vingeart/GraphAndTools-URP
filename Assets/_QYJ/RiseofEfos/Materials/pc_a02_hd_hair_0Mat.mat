@@ -24,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: dbcaa9c2b96d69243a3a412508ebae37, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -72,6 +72,7 @@ Material:
     - _AlphaCutoff: 0.5
     - _Anisotropy1Rang: 3.5
     - _Anisotropy2Rang: 5.7
+    - _AnisotropyIntensity: 1
     - _AnisotropyOffset: -1.5
     - _AnisotropySpecRang: 0.01
     - _Brightness: 1
@@ -79,6 +80,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _Float0: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
@@ -94,8 +96,8 @@ Material:
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _Anisotropy1SpecColor: {r: 0.16911757, g: 0.16911757, b: 0.16911757, a: 0}
-    - _Anisotropy2SpecColor1: {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 0}
+    - _Anisotropy1SpecColor: {r: 0.88309896, g: 0.984127, b: 0.99056596, a: 0}
+    - _Anisotropy2SpecColor1: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

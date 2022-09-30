@@ -9,7 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: pc_g01_hd_body_0Mat
   m_Shader: {fileID: 4800000, guid: 6ab97e59f95c47649821b049e7022c18, type: 3}
-  m_ShaderKeywords: _KEYWORD0_SSS
+  m_ShaderKeywords: _KEYWORD0_SSS _ROUGHNESSMAP_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -85,6 +85,7 @@ Material:
     - _Brightness: 0
     - _BumpScale: 0.5
     - _Cutoff: 0.5
+    - _DeSaturate: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
@@ -96,10 +97,12 @@ Material:
     - _OcclusionStrength: 1
     - _PBRIntensity: 1
     - _Parallax: 0.02
+    - _RoughnessMap: 1
     - _SSS: 1
     - _SSSIntensity: 1.1
     - _SSSUOfsset: 0.17
     - _SSSVOffset: 1
+    - _SkinMode: 1
     - _Smoothness: 0.5
     - _SmoothnessMax: 0.5
     - _SmoothnessMin: 0.1

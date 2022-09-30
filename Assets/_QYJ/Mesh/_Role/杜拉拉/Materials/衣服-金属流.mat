@@ -145,6 +145,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AO: 0
     - _Alpha: 0
     - _AlphaClip: 0
     - _AlphaCutoff: 0.5
@@ -156,10 +157,12 @@ Material:
     - _CubeIntensity: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DeSaturate: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
     - _EnvironmentReflections: 1
+    - _Float0: 0
     - _Float1: 0
     - _GlossMapScale: 1
     - _Glossiness: 0
@@ -183,6 +186,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 5
     - _Surface: 1
+    - _ToggleRoughness: 0
     - _UVSec: 0
     - _WorkflowMode: 1
     - _ZWrite: 0

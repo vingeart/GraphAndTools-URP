@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 510042_mat
+  m_Shader: {fileID: 4800000, guid: 6ef4b967516811e4094792d0cd570064, type: 3}
+  m_ShaderKeywords: _IS_BLENDADDTOHIGHCOLOR_ON _IS_LIGHTCOLOR_HIGHCOLOR_ON _IS_SPECULARTOHIGHCOLOR_ON
+    _IS_USETWEAKHIGHCOLORONSHADOW_ON _SET_SYSTEMSHADOWSTOBASE_ON
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: 46a92308e23116040a172329d30b48c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _HighColor_Tex:
+        m_Texture: {fileID: 2800000, guid: 46a92308e23116040a172329d30b48c5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicRSmoothnessG:
+        m_Texture: {fileID: 2800000, guid: 0274b033b1f994f4ab796ebf00bd4a36, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 8694f32a921306f429c19ef876dafad7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _1st2nd_Shader_Feather: 0.33
+    - _BaseColor_Step: 1
+    - _BaseShader_Feather: 0.81
+    - _BumpScale: 1
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _FresnelPower: 1.5
+    - _FresnelScale: 5
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _HightColor_Power: 1
+    - _IsFresnel: 0
+    - _Is_BlendAddToHighColor: 1
+    - _Is_LightColor_HighColor: 1
+    - _Is_SpecularToHighColor: 1
+    - _Is_UseTweakHighColorOnShadow: 1
+    - _Metallic: 0
+    - _Metallic_Value: 1
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _RimLight: 0
+    - _RimLight_InSideMask: 0.584
+    - _RimLight_Power: 0.58
+    - _Set_SystemShadowsToBase: 1
+    - _ShaderColor_Step: 0.26
+    - _SmoothnessTextureChannel: 0
+    - _Smoothness_Value: 0.2
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _TweakHighColorOnShadow: 1
+    - _Tweak_HighColorMaskLevel: 1
+    - _Tweak_SystemShadowLevel: -0.02
+    - _UVSec: 0
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _1st_ShaderColor: {r: 0.079228096, g: 0.055446785, b: 0.13207549, a: 0.7}
+    - _2nd_ShaderColor: {r: 0.13207549, g: 0.06292275, b: 0.12823369, a: 0.7}
+    - _BaseColor: {r: 0.943, g: 0.943, b: 0.943, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color0: {r: 0.010955612, g: 0, b: 0.7924528, a: 0}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _FresnelColor: {r: 0.1882353, g: 0.3254902, b: 0.7490196, a: 1}
+    - _HighColor: {r: 0.6977409, g: 0.6637148, b: 0.8962264, a: 1}

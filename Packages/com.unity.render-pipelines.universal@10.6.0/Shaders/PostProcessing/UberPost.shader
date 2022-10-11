@@ -119,6 +119,9 @@ Shader "Hidden/Universal Render Pipeline/UberPost"
 
             half3 color = (0.0).xxx;
 
+            //开启后处理后，支持相机颜色 a 通道控制背景透明度
+            half cameraColorA = SAMPLE_TEXTURE2D_X(_SourceTex, sampler_LinearClamp, uvDistorted).a;
+
             #if _CHROMATIC_ABERRATION
             {
                 // Very fast version of chromatic aberration from HDRP using 3 samples and hardcoded
@@ -217,7 +220,8 @@ Shader "Hidden/Universal Render Pipeline/UberPost"
             #endif
 
             // return half4(color, 1.0);
-            return half4(color, SAMPLE_TEXTURE2D_X(_SourceTex, sampler_LinearClamp, uv).a);
+            // return half4(color, SAMPLE_TEXTURE2D_X(_SourceTex, sampler_LinearClamp, uv).a);
+            return  half4(color , cameraColorA);
         }
 
     ENDHLSL

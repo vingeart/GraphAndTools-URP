@@ -20,11 +20,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 841ca06c448807946af5b85d56e11184, type: 3}
+        m_Texture: {fileID: 2800000, guid: b9832285c84237140a772766fe772db7, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 551b2b916266a2f4082d3ffd3546e3fc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -48,7 +48,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
-        m_Texture: {fileID: 2800000, guid: 1cf89a03b6a8d1446a9a4666caa4eabd, type: 3}
+        m_Texture: {fileID: 2800000, guid: 607a1288072a01b4c8974b65383f253c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -89,10 +89,11 @@ Material:
     - _AlphaCutoff: 0.5
     - _AnisoTBStrength: 1
     - _Anisotropic: 0
-    - _Anisotropy1Rang: 3.5
-    - _Anisotropy2Rang: 7.5
-    - _AnisotropyOffset: -1.5
-    - _AnisotropySpecRang: 0.01
+    - _Anisotropy1Rang: 5.95
+    - _Anisotropy2Rang: 9.91
+    - _AnisotropyIntensity: 0.968
+    - _AnisotropyOffset: -0.6
+    - _AnisotropySpecRang: 0.1
     - _Blend: 0
     - _Brightness: 1
     - _BumpScale: 1
@@ -107,12 +108,12 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0
+    - _Metallic: 0.393
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0.435
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -120,10 +121,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _Anisotropy1SpecColor: {r: 0.9632353, g: 0.9038391, b: 0.8499135, a: 0}
-    - _Anisotropy2SpecColor1: {r: 0.9632353, g: 0.9038391, b: 0.8499135, a: 0}
+    - _Anisotropy1SpecColor: {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 0}
+    - _Anisotropy2SpecColor1: {r: 0.103773594, g: 0.093833014, b: 0.087620154, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

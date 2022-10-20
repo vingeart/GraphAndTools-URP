@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 510042_mat 1
+  m_Name: 510001_mat 1
   m_Shader: {fileID: 4800000, guid: 9ba0a685a1eaa6c469a0ee2eae64d1e0, type: 3}
   m_ShaderKeywords: _IS_BLENDADDTOHIGHCOLOR_ON _IS_LIGHTCOLOR_HIGHCOLOR_ON _IS_SPECULARTOHIGHCOLOR_ON
     _IS_USETWEAKHIGHCOLORONSHADOW_ON _SET_SYSTEMSHADOWSTOBASE_ON
@@ -21,11 +21,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 52b7babc644ef9d4a863b49715b6446a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3e2e05f9b7abe6a4cacc245666bbb3c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 3214a058de2bbba4bbcdcf02b6e1d779, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7d3134346cc8a09498561100442616ec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -45,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HighColor_Tex:
-        m_Texture: {fileID: 2800000, guid: 46a92308e23116040a172329d30b48c5, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3e2e05f9b7abe6a4cacc245666bbb3c1, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Mask:
-        m_Texture: {fileID: 2800000, guid: 13eb28ab2599b25408871eb2db76cc79, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5250bac91ffab874da0c364b932d4248, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -61,11 +61,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicRSmoothnessG:
-        m_Texture: {fileID: 2800000, guid: 0274b033b1f994f4ab796ebf00bd4a36, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5250bac91ffab874da0c364b932d4248, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalMap:
-        m_Texture: {fileID: 2800000, guid: 8694f32a921306f429c19ef876dafad7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7d3134346cc8a09498561100442616ec, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -81,20 +81,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _1st2nd_Shader_Feather: 0.33
+    - _1st2nd_Shader_Feather: 0.37
     - _AlphaCutoff: 0.5
-    - _B: 0.3
-    - _BaseColor_Step: 1
-    - _BaseShader_Feather: 0.81
-    - _Brightness: 0.5
+    - _B: 1
+    - _BaseColor_Step: 0.63
+    - _BaseShader_Feather: 0.35
+    - _Brightness: 0.17
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _Emission: 0.45
+    - _Emission: 1
     - _FresnelPower: 1.5
     - _FresnelScale: 5
-    - _G: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -104,37 +103,37 @@ Material:
     - _Is_LightColor_HighColor: 1
     - _Is_SpecularToHighColor: 1
     - _Is_UseTweakHighColorOnShadow: 1
-    - _Max: 0.5
+    - _Max: 1
     - _Metallic: 1
     - _Metallic_Value: 1
-    - _Min: 0.457
+    - _Min: 0.35
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _R: 1.2
+    - _R: 1
     - _RimLight: 0
     - _RimLight_InSideMask: 0.584
-    - _RimLight_Power: 0.58
+    - _RimLight_Power: 0.394
     - _Roughness: 0
     - _Set_SystemShadowsToBase: 1
-    - _ShaderColor_Step: 0.26
+    - _ShaderColor_Step: 0.14
     - _SmoothnessTextureChannel: 0
     - _Smoothness_Value: 0.2
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _TweakHighColorOnShadow: 1
     - _Tweak_HighColorMaskLevel: 1
-    - _Tweak_SystemShadowLevel: -0.02
+    - _Tweak_SystemShadowLevel: -0.26
     - _UVSec: 0
     - _ZWrite: 1
     - __dirty: 0
     m_Colors:
-    - _1st_ShaderColor: {r: 0.079228096, g: 0.055446785, b: 0.13207549, a: 0.7}
-    - _2nd_ShaderColor: {r: 0.13207549, g: 0.06292275, b: 0.12823369, a: 0.7}
-    - _BaseColor: {r: 0.943, g: 0.943, b: 0.943, a: 1}
+    - _1st_ShaderColor: {r: 0.057284188, g: 0.03257386, b: 0.11320752, a: 0.7}
+    - _2nd_ShaderColor: {r: 0.11320752, g: 0.052865773, b: 0.094350725, a: 0.7}
+    - _BaseColor: {r: 0.93659955, g: 0.7122642, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Color0: {r: 0.010955612, g: 0, b: 0.7924528, a: 0}
+    - _Color0: {r: 0, g: 0.1760827, b: 0.5283019, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FresnelColor: {r: 0.1882353, g: 0.3254902, b: 0.7490196, a: 1}
-    - _HighColor: {r: 0.6977409, g: 0.6637148, b: 0.8962264, a: 1}
+    - _HighColor: {r: 1, g: 0.8939512, b: 0.4481132, a: 1}
   m_BuildTextureStacks: []

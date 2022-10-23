@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Toony Colors Pro 2_User_Water
+  m_Shader: {fileID: 4800000, guid: 5b457a56cfbd3e64ba416e3d87d825e4, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BaseMap:
+        m_Texture: {fileID: 2800000, guid: dbf941e160b6df348ad65c5ec342afa5, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoamTex:
+        m_Texture: {fileID: 2800000, guid: cd460ee4ac5c1e746b7a734cc7cc64dd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _DepthAlphaDistance: 4.8
+    - _DepthAlphaMin: 0.707
+    - _DepthColorDistance: 0.78
+    - _FoamSmoothness: 0.02
+    - _FoamSpread: 3.58
+    - _FoamStrength: 0.383
+    - _RampSmoothing: 0.5
+    - _RampThreshold: 0.5
+    - _ReceiveShadowsOff: 1
+    - _WavesFrequency: 1
+    - _WavesHeight: 0.1
+    - _WavesSpeed: 0
+    - __dummy__: 0
+    m_Colors:
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _DepthColor: {r: 0.26610893, g: 0.26610893, b: 0.49056602, a: 1}
+    - _FoamColor: {r: 0.42386082, g: 0.6651923, b: 0.7075472, a: 1}
+    - _FoamSpeed: {r: 2, g: 2, b: 2, a: 2}
+    - _HColor: {r: 0.75, g: 0.75, b: 0.75, a: 1}
+    - _SColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+  m_BuildTextureStacks: []

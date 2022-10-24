@@ -89,6 +89,7 @@ Material:
     - _Brightness: 0.17
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DarkRange: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _Emission: 1
@@ -103,6 +104,7 @@ Material:
     - _Is_LightColor_HighColor: 1
     - _Is_SpecularToHighColor: 1
     - _Is_UseTweakHighColorOnShadow: 1
+    - _LightRange: -1
     - _Max: 1
     - _Metallic: 1
     - _Metallic_Value: 1
@@ -130,6 +132,7 @@ Material:
     m_Colors:
     - _1st_ShaderColor: {r: 0.057284188, g: 0.03257386, b: 0.11320752, a: 0.7}
     - _2nd_ShaderColor: {r: 0.11320752, g: 0.052865773, b: 0.094350725, a: 0.7}
+    - _AmbientColor: {r: 3.031433, g: 0, b: 2.3300428, a: 0}
     - _BaseColor: {r: 0.93659955, g: 0.7122642, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Color0: {r: 0, g: 0.1760827, b: 0.5283019, a: 0}

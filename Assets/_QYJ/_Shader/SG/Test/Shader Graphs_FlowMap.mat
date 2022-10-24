@@ -47,7 +47,8 @@ Material:
     m_Floats:
     - Vector1_5bb96fe1700a4b9999209f785072e5df: 1
     - Vector1_fa5bde7ca5374ec58789605bab3d88ce: 0.74
-    - _BaseMap_ST: 3.57
+    - _BaseMap_ST: 1
+    - _BaseTiling: 1
     - _FlowTiling: 1
     - _Speed: 3.76
     - _Strength: 0.31
